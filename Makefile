@@ -27,6 +27,9 @@ install-argocd-ingress:
 install-grafana-ingress:
 	kubectl create -f resources/grafana-ingress.yaml -n monitoring
 
+install-kibana-ingress:
+	kubectl create -f resources/kibana-ingress.yaml -n elasticsearch
+
 install-cert-manager:
 	helm repo add jetstack https://charts.jetstack.io
 	kubectl create namespace cert-manager
