@@ -1,4 +1,4 @@
-.PHONY: install-argocd get-argocd-password get-grafana-password proxy-argocd-ui check-argocd-ready
+.PHONY: install-argocd install-sealed-secrets get-argocd-password get-grafana-password proxy-argocd-ui check-argocd-ready
 
 list:
 	@$(MAKE) -pRrq -f $(lastword $(MAKEFILE_LIST)) : 2>/dev/null | awk -v RS= -F: '/^# File/,/^# Finished Make data base/ {if ($$1 !~ "^[#.]") {print $$1}}' | sort | egrep -v -e '^[^[:alnum:]]' -e '^$@$$'
@@ -19,6 +19,9 @@ install-argocd:
 	kubectl create ns argocd || true
 	kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	kubectl apply -f resources/application-bootstrap.yaml -n argocd
+
+install-sealed-secrets:
+	kubectl apply -n kube-system -f https://github.com/bitnami-labs/sealed-secrets/releases/download/v0.22.0/controller.yaml
 
 install-argocd-ingress:
 	kubectl create -f resources/argocd-ingress.yaml -n argocd
