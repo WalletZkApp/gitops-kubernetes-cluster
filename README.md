@@ -10,6 +10,16 @@ It leverages ArgoCD to pull in a Helm chart that launches additional ArgoCD appl
 
 
 ## Bootstrap
+Test cluster:
+```bash
+export KUBECONFIG=/$HOME/Documents/WalletZkApp/Scaleway/kubeconfig-zkWallet-test.yaml
+```
+
+PRD cluster:
+```bash
+export KUBECONFIG=/$HOME/Documents/WalletZkApp/Scaleway/kubeconfig-zkWallet-prd.yaml
+```
+
 
 - `make install-argocd`
 

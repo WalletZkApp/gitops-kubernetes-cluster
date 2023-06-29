@@ -13,11 +13,9 @@ check-argocd-ready:
 	kubectl wait --for=condition=available deployment -l "app.kubernetes.io/name=argocd-server" -n argocd --timeout=300s
 
 proxy-argocd-ui:
-	kubectl port-forward svc/argocd-server -n argocd 8080:80
+	kubectl port-forward -n argocd service/argocd-server 8080:80
 
 install-argocd:
-	kubectl create ns argocd || true
-	kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 	kubectl apply -f resources/application-bootstrap.yaml -n argocd
 
 install-sealed-secrets:
@@ -26,12 +24,6 @@ install-sealed-secrets:
 install-argocd-ingress:
 	kubectl create -f resources/argocd-ingress.yaml -n argocd
 	kubectl patch deployment argocd-server --type json -p='[ { "op": "replace", "path":"/spec/template/spec/containers/0/command","value": ["argocd-server","--staticassets","/shared/app","--insecure"] }]' -n argocd
-
-install-grafana-ingress:
-	kubectl create -f resources/grafana-ingress.yaml -n monitoring
-
-install-kibana-ingress:
-	kubectl create -f resources/kibana-ingress.yaml -n elasticsearch
 
 install-cert-manager:
 	helm repo add jetstack https://charts.jetstack.io
