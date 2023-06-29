@@ -21,7 +21,7 @@ install-argocd:
 	kubectl apply -f resources/application-bootstrap.yaml -n argocd
 
 install-argocd-ingress:
-	kubectl create -f resources/argocd-ingress.yaml -n argocd
+	kubectl create -f resources/ingress.yaml -n argocd
 	kubectl patch deployment argocd-server --type json -p='[ { "op": "replace", "path":"/spec/template/spec/containers/0/command","value": ["argocd-server","--staticassets","/shared/app","--insecure"] }]' -n argocd
 
 install-grafana-ingress:
