@@ -1,7 +1,7 @@
 apiVersion: cert-manager.io/v1alpha3
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-test
+  name: letsencrypt-prd
 spec:
   acme:
     email: iamdev@walletzk.app
@@ -11,12 +11,12 @@ spec:
     solvers:
     - http01:
        ingress:
-         class:  traefik
+         class:  nginx
 ---
 apiVersion: cert-manager.io/v1alpha3
 kind: ClusterIssuer
 metadata:
-  name: staging-letsencrypt-test
+  name: staging-letsencrypt-prd
 spec:
   acme:
     email: iamdev@walletzk.app
@@ -26,4 +26,4 @@ spec:
     solvers:
     - http01:
        ingress:
-         class:  traefik
+         class:  nginx
